@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JoyCaption API — Python client &amp; hosted endpoint</title>
+<meta name="description" content="Python client for a JoyCaption-style image captioning API: describe images through a hosted vision-language endpoint">
+<link rel="canonical" href="https://joycaption.github.io/joycaption-api/"><meta name="google-site-verification" content="8NEKdWXBIiAKuN0mqEqYwTB3yB8iIW-_cQmXANbDTs8" /><meta name="msvalidate.01" content="91A75274D586670BEE99EC35A630C098">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is there a JoyCaption API?", "acceptedAnswer": {"@type": "Answer", "text": "There is no official hosted JoyCaption API; the project ships weights for self-hosting. This client gives you the same image-to-text capability through a hosted VLM endpoint (yorickvp/llava-13b) that you call over HTTPS."}}, {"@type": "Question", "name": "How much does the JoyCaption API cost?", "acceptedAnswer": {"@type": "Answer", "text": "The hosted yorickvp/llava-13b model is $0.0005 per run. Billing is per prediction; there is no hourly GPU charge, so 1,000 captions cost roughly $0.50."}}, {"@type": "Question", "name": "Can I run JoyCaption without a GPU?", "acceptedAnswer": {"@type": "Answer", "text": "With this client, yes: inference runs on the hosted service and your code only makes HTTP requests. Self-hosting JoyCaption itself needs a CUDA GPU with enough memory for an 8B language model plus a vision encoder."}}, {"@type": "Question", "name": "Does this client work with the original JoyCaption repo or ComfyUI?", "acceptedAnswer": {"@type": "Answer", "text": "No. It does not load the fpgaminer/joycaption checkpoints and it is not a ComfyUI node. It is a network client for the hosted endpoint. To use JoyCaption's exact modes and weights, run the official repository locally."}}, {"@type": "Question", "name": "What input formats does it accept?", "acceptedAnswer": {"@type": "Answer", "text": "Two required fields: image (a publicly reachable image URL) and prompt (the instruction, e.g. a caption request or a question). Optional max_tokens, temperature and top_p control length and randomness. The output is plain text."}}, {"@type": "Question", "name": "Is this the official JoyCaption SDK?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is an independent, community-maintained client and is not affiliated with the JoyCaption author. The official project lives at https://github.com/fpgaminer/joycaption."}}]}</script>
+<style>
+:root{--ink:#16191d;--muted:#5b6470;--line:#e3e6ea;--accent:#2563eb;--bg:#fff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+main{max-width:860px;margin:0 auto;padding:48px 20px 80px}h1{font-size:34px;line-height:1.2;margin:0 0 12px}h2{font-size:22px;margin:40px 0 10px}
+.lead{font-size:18px;color:var(--muted)}.cta{display:inline-block;background:var(--accent);color:#fff;padding:12px 22px;border-radius:8px;font-weight:600;text-decoration:none;margin:12px 8px 12px 0}
+.ghost{display:inline-block;border:1px solid var(--line);padding:11px 20px;border-radius:8px;text-decoration:none;color:var(--ink)}
+pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:10px;overflow:auto;font-size:14px}code{font-family:ui-monospace,Menlo,monospace}
+details{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0}summary{cursor:pointer;font-weight:600}
+footer{margin-top:56px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+</style></head><body><main>
+<h1>JoyCaption API for Python</h1>
+<p class="lead">Python client for a JoyCaption-style image captioning API: describe images through a hosted vision-language endpoint</p>
+<p><a class="cta" href="https://synexa.ai/explore/yorickvp/llava-13b?utm_source=github&utm_medium=ugc&utm_campaign=joycaption&utm_content=pages-hero&utm_term=tier-a" rel="noopener">Run JoyCaption in the browser →</a> <a class="ghost" href="https://github.com/joycaption/joycaption-api">View on GitHub</a></p>
+<h2>Install</h2>
+<pre><code>pip install git+https://github.com/joycaption/joycaption-api.git
+export SYNEXA_API_KEY="sk-..."</code></pre>
+<h2>Quickstart</h2>
+<pre><code>import joycaption_api
+
+output = joycaption_api.run({
+    "image": "https://example.com/input.png",
+    "prompt": "Are you allowed to swim here?"
+})
+print(output)</code></pre>
+<h2>Hosted models</h2>
+<ul><li><a href="https://synexa.ai/explore/yorickvp/llava-13b?utm_source=github&utm_medium=ugc&utm_campaign=joycaption&utm_content=pages-models&utm_term=tier-a" rel="noopener">yorickvp/llava-13b</a> — Visual instruction tuning towards large language and vision models with GPT-4 level capabilities <em>($0.0005 / run)</em></li></ul>
+<h2>About JoyCaption</h2>
+<p>JoyCaption is an open image captioning model by fpgaminer that writes dense, literal descriptions and tag lists for diffusion-model training data, pairing a SigLIP vision encoder with a Llama 3.1 8B language model. This client calls a hosted vision-language endpoint (yorickvp/llava-13b, serving LLaVA 1.5 13B) from Python with one dependency: send an image URL and a prompt, get text back at $0.0005 per run. JoyCaption's own weights can be self-hosted from the official repository.</p>
+<h2>FAQ</h2>
+<details><summary>Is there a JoyCaption API?</summary><p>There is no official hosted JoyCaption API; the project ships weights for self-hosting. This client gives you the same image-to-text capability through a hosted VLM endpoint (yorickvp/llava-13b) that you call over HTTPS.</p></details><details><summary>How much does the JoyCaption API cost?</summary><p>The hosted yorickvp/llava-13b model is $0.0005 per run. Billing is per prediction; there is no hourly GPU charge, so 1,000 captions cost roughly $0.50.</p></details><details><summary>Can I run JoyCaption without a GPU?</summary><p>With this client, yes: inference runs on the hosted service and your code only makes HTTP requests. Self-hosting JoyCaption itself needs a CUDA GPU with enough memory for an 8B language model plus a vision encoder.</p></details><details><summary>Does this client work with the original JoyCaption repo or ComfyUI?</summary><p>No. It does not load the fpgaminer/joycaption checkpoints and it is not a ComfyUI node. It is a network client for the hosted endpoint. To use JoyCaption's exact modes and weights, run the official repository locally.</p></details><details><summary>What input formats does it accept?</summary><p>Two required fields: image (a publicly reachable image URL) and prompt (the instruction, e.g. a caption request or a question). Optional max_tokens, temperature and top_p control length and randomness. The output is plain text.</p></details><details><summary>Is this the official JoyCaption SDK?</summary><p>No. This is an independent, community-maintained client and is not affiliated with the JoyCaption author. The official project lives at https://github.com/fpgaminer/joycaption.</p></details>
+<p><a class="cta" href="https://synexa.ai/explore/yorickvp/llava-13b?utm_source=github&utm_medium=ugc&utm_campaign=joycaption&utm_content=pages-cta&utm_term=tier-a" rel="noopener">Get an API key and run JoyCaption →</a></p>
+<footer>Independent client for the hosted JoyCaption endpoint on Synexa. Not affiliated with the model's authors. MIT licensed.</footer>
+</main></body></html>
