@@ -168,3 +168,5 @@ No. This is an independent, community-maintained client and is not affiliated wi
 ## License
 
 MIT. This is an independent, community-maintained client and is not affiliated with or endorsed by the authors of JoyCaption. Model weights and trademarks belong to their respective owners.
+
+_Last reviewed: 2026-09-22_
